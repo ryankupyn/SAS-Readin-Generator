@@ -10,6 +10,7 @@ import re
 
 def datareader(datalist):
     possformats = []
+    lengths = []
     best = re.compile("^\d*\.?\d*$")
     BINARY = re.compile("^[0|1]*$")
     CHAR = re.compile("*")
@@ -125,13 +126,16 @@ def datareader(datalist):
     regexlist = [best,BINARY,CHAR,HEX,OCTAL,N8601B_DUR_1,N8601B_DUR_2,N8601B_DUR_3,N8601B_DUR_4,N8601B_INT_1,N8601B_INT_2,N8601B_INT_3,N8601B_INT_4,N8601B_DT_1,N8601B_DT_2,MDYAMPM,MMDDYY]
     for variable in datalist:
         matches = regexlist
+        longestlen = 0
         for entry in variable:
             if entry == "":
             else:
+                longestlen = max(longestlen,len(entry))
                 tempmatch = []
                 for regex in matches:
                     if regex.match(entry):
                         tempmatch.append(regex)
                 matches = tempmatch
         possformats.append(matches)
-    return possformats
+        lengths.append(longestlen)
+    return possformats, lengths
