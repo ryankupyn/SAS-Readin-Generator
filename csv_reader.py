@@ -1,6 +1,6 @@
 import csv
 
-def csvreader(filepath):
+def csvreader(filepath): #This takes a filepath to a CSV and outputs a list-of-lists (one sublist per column) of data and a list of variable names - as of right now it only works for the most plain-vanilla of csvs (header on the top row, data in orderly lines below that). The occasional blank variable name isn't a problem though - they just show up as VAR(column number)
     result = []
     varnames = []
     with open(filepath) as readin:
@@ -13,3 +13,4 @@ def csvreader(filepath):
                 entrynum = row.index(entry)
                 result[entrynum].append(entry)
     return result, varnames
+
